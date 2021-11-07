@@ -6,6 +6,8 @@ import shutil
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+if not os.path.exists("static/files"):
+    os.mkdir("static/files")
 
 
 @app.route("/")
@@ -38,6 +40,4 @@ def api():
 
 
 if __name__ == '__main__':
-    if not os.path.exists("static/files"):
-        os.mkdir("static/files")
     app.run(host='0.0.0.0', port=8899, debug=False, threaded=True)
