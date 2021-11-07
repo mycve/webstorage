@@ -6,8 +6,8 @@ import shutil
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-if not os.path.exists("./static/files"):
-    os.mkdir("./static/files")
+if not os.path.exists("static/files"):
+    os.mkdir("static/files")
 
 
 @app.route("/")
@@ -20,8 +20,8 @@ def api():
     if request.args.get("action") == "upload":
         f = request.files["file"]
         path_name = uuid.uuid4().hex
-        os.mkdir(os.path.join(r".\static\files", r"{}".format(path_name)))
-        filepath = os.path.join(r".\static\files", r"{}\{}".format(path_name, secure_filename(f.filename)))
+        os.mkdir(os.path.join("static/files", r"{}".format(path_name)))
+        filepath = os.path.join("static/files", r"{}\{}".format(path_name, secure_filename(f.filename)))
         f.save(filepath)
         return jsonify({"code": 0, "path": filepath})
     elif request.args.get("action") == "file_list":
@@ -35,7 +35,7 @@ def api():
         return jsonify({"code": 0, "data": _data})
     elif request.args.get("action") == "del":
         path = json.loads(request.data.decode())["path"]
-        shutil.rmtree(os.path.join("./static/files", secure_filename(path)))
+        shutil.rmtree(os.path.join("static/files", secure_filename(path)))
         return jsonify({"code": 0})
 
 
