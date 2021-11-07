@@ -3,10 +3,11 @@
     用于远程下载、异地备份、私人网盘等
 
 ### 使用方法
-    1. git clone 本项目
-    2. pip3 install -r requirements.txt
-    3. python3 app.py
-    4. 访问ip:8899 端口(默认8899)
+    1. git clone https://github.com/mycve/webstorage.git
+    2. cd webstorage
+    3. pip3 install -r requirements.txt
+    4. python3 app.py
+    5. 访问 https://ip:8899 (默认端口8899)
 
 #### 本着轻量级原则，未加密码等功能，私人用吧...
 
