@@ -12,3 +12,6 @@
 
 #### Tips：推荐部署到外企一家python免费runtime（♥♥♥ because：forever free
 #### [点击直达](https://www.pythonanywhere.com/)
+
+### Demo
+![image][https://raw.githubusercontent.com/mycve/webstorage/main/static/1.png]
