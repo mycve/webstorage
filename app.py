@@ -20,8 +20,8 @@ def api():
     if request.args.get("action") == "upload":
         f = request.files["file"]
         path_name = uuid.uuid4().hex
-        os.mkdir(os.path.join("static/files", r"{}".format(path_name)))
-        filepath = os.path.join("static/files", r"{}\{}".format(path_name, secure_filename(f.filename)))
+        os.mkdir(os.path.join("static/files", "{}".format(path_name)))
+        filepath = os.path.join("static/files", "{}/{}".format(path_name, secure_filename(f.filename)))
         f.save(filepath)
         return jsonify({"code": 0, "path": filepath})
     elif request.args.get("action") == "file_list":
