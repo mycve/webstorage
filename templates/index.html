@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件网盘</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div class="layui-upload-drag" id="test10" style="width: 95vw">
+  <i class="layui-icon"></i>
+  <p>点击上传，或将文件拖拽到此处</p>
+</div>
+
+<blockquote class="layui-elem-quote layui-text">
+    用于存储一些数据！未设置密码等措施，避免对外开放！
+</blockquote>
+<script type="text/html" id="uptime">
+    {% raw %}
+    {{ util.toDateString(d.uptime, 'yyyy-MM-dd HH:mm:ss') }}
+    {%  endraw  %}
+</script>
+<script type="text/html" id="file_szie">
+    {% raw %}
+    {{ (d.filesize/1024).toFixed(2) }} KB
+    {%  endraw  %}
+</script>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="download">下载文件</a>
+  <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="copy_download_url">复制地址</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除文件</a>
+</script>
+<table class="layui-table" lay-data="{height:'full', url:'/api?action=file_list', id:'file_table', skin: 'row', even: true}" lay-filter="file_table">
+  <thead>
+    <tr>
+      <th lay-data="{field:'uid', width:300}">UID</th>
+      <th lay-data="{field:'filename', width:200}">文件名</th>
+      <th lay-data="{field:'filesize', width:150, templet:'#file_szie'}">文件大小</th>
+      <th lay-data="{field:'uptime', width:250, templet:'#uptime'}">上传时间</th>
+      <th lay-data="{field:'down_path'}">下载路径</th>
+      <th lay-data="{fixed:'right',toolbar: '#barDemo', width:250}">操作</th>
+    </tr>
+  </thead>
+</table>
+<script src="/static/layui/layui.all.js" charset="utf-8"></script>
+<script>
+    const table = layui.table;
+    const upload = layui.upload;
+    const util = layui.util;
+    upload.render({
+        elem: '#test10'
+        ,url: '/api?action=upload'
+        ,accept: 'file'
+        ,done: function(res){
+          layer.msg('上传成功');
+          setTimeout(()=>{
+                location.reload();
+            }, 1500)
+        }
+    });
+
+  table.on('tool(file_table)', function(obj){
+    const data = obj.data;
+      console.info(data)
+    if (obj.event === 'del'){
+        fetch("/api?action=del",{method:"POST",body:JSON.stringify({"path": data.uid})}).then(r=>{r.json()}).then(res=>{
+            layer.msg("del success !");
+            setTimeout(()=>{
+                location.reload();
+            }, 1500)
+        }).catch((err)=>{})
+    }else if(obj.event === 'download'){
+        window.location.href = data.down_path;
+    }else if(obj.event === 'copy_download_url'){
+        copyText(window.location.href+data.down_path,()=>{
+            layer.msg("copy success !")
+        })
+    }
+  });
+
+  function copyText(text, callback){
+        const tag = document.createElement('input');
+        tag.setAttribute('id', 'cp_hgz_input');
+        tag.value = text;
+        document.getElementsByTagName('body')[0].appendChild(tag);
+        document.getElementById('cp_hgz_input').select();
+        document.execCommand('copy');
+        document.getElementById('cp_hgz_input').remove();
+        if(callback) {callback(text)}
+    }
+</script>
+</body>
+</html>
