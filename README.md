@@ -15,7 +15,7 @@
 #### [点击直达](https://www.pythonanywhere.com/)
 
 ### Demo(是我已经部署好的，地址我就不放了)
-![image](https://raw.githubusercontent.com/mycve/webstorage/main/static/1.png)
+![image](https://raw.githubusercontent.com/mycve/webstorage/main/demo.gif)
 
 
 ### 小技巧（拖对方机器文件、快捷上传等）：
